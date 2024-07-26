@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Function to generate and display random quote
-    function displayRandomQuote() {
+    function showRandomQuote() {
         // Clear display
         quoteDisplay.innerHTML = "";
         // Check if quotes array is not empty
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // When show new quote button is clicked show new quote
-    newQuoteBtn.addEventListener("click", displayRandomQuote);
+    newQuoteBtn.addEventListener("click", showRandomQuote);
 
     // Add new quote object to array
     addQuoteToArray.addEventListener("click", addQuote);
