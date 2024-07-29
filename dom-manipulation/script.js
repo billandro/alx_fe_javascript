@@ -129,6 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
+            const newArray = quotesObject.map(quote => {
+                if (categories.includes(quote.category)) {
+                    return quote;
+                }
+            });
+            console.log(newArray);
+
             console.log(`Categories before loop: ${categories}`);
             // loop through catergories array
             for (category of categories) {
