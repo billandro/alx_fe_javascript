@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Function to populate select menu with categories
-    function populateSelectMenu() {
+    function populateCategories() {
         // Get array of quote objects
         quotesObject = JSON.parse(localStorage.getItem("quotesObject") || "[]");
         // Initialize empty arrays
@@ -288,5 +288,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // on load
     retieveActiveOption();
     // Populate select menu with categories on load
-    populateSelectMenu();
+    populateCategories();
 });
