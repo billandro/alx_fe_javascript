@@ -18,20 +18,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Active random rumber
     let activeNumber;
     // Active/chosen option
-    let chosenOption;
+    let selectedCategory;
 
     // Load chosen category/option
     function retieveActiveOption() {
         // clear display
         quoteDisplay.innerHTML = "";
         // retrieve active option
-        chosenOption = JSON.parse(localStorage.getItem("chosenOption"));
-        console.log(`Retrieved option: ${chosenOption}`);
+        selectedCategory = JSON.parse(localStorage.getItem("selectedCategory"));
+        console.log(`Retrieved option: ${selectedCategory}`);
         // retrieve quotes array
         quotesObject = JSON.parse(localStorage.getItem("quotesObject") || "[]");
-        if (chosenOption && quotesObject.length !== 0) {
+        if (selectedCategory && quotesObject.length !== 0) {
             for (let i = 0; i < quotesObject.length; i++) {
-                if (chosenOption === quotesObject[i].category) {
+                if (selectedCategory === quotesObject[i].category) {
                     const quoteCard = document.createElement("div");
                     const quoteText = document.createElement("p");
                     const quoteCategory = document.createElement("p");
@@ -152,14 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Populate screen based on chosen option (category)
     function filterQuotes() {
         // get chosen option from select menu
-        chosenOption = categoryFilter.value;
-        console.log(`The chosen option is: ${chosenOption}`);
+        selectedCategory = categoryFilter.value;
+        console.log(`The chosen option is: ${selectedCategory}`);
         // save chosen/active option to local storage
-        localStorage.setItem("chosenOption", JSON.stringify(chosenOption));
+        localStorage.setItem("selectedCategory", JSON.stringify(selectedCategory));
         // retrieve the array of object quotes from local storage
         quotesObject = JSON.parse(localStorage.getItem("quotesObject") || "[]");
         // Check what the option value is 
-        if (chosenOption === "all") {
+        if (selectedCategory === "all") {
             // clear display before re-populating
             quoteDisplay.innerHTML = "";
             for (let i = 0; i < quotesObject.length; i++) {
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // loop through array of quotes
         for (let i = 0; i < quotesObject.length; i++) {
             // look for categories in the quote objects that match chosen option
-            if (chosenOption === quotesObject[i].category) {
+            if (selectedCategory === quotesObject[i].category) {
                 const quoteCard = document.createElement("div");
                 const quoteText = document.createElement("p");
                 const quoteCategory = document.createElement("p");
@@ -283,8 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Alert user of success
             alert('Quotes imported successfully!');
         };
-        console.log(fileReader.readAsText(event.target.files[0]));
-        
+        console.log(fileReader.readAsText(event.target.files[0]));   
     });
     // When show new quote button is clicked show new quote
     newQuoteBtn.addEventListener("click", showRandomQuote);
