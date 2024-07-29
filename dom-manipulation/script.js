@@ -129,12 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            const newArray = quotesObject.map(quote => {
-                if (categories.includes(quote.category)) {
-                    return quote;
-                }
+            const newArray = categories.map(category => {
+                return category;
             });
-            console.log(newArray);
+
+            const empty = document.getElementsByTagName("h1");
+            // added this simply to accomodate text content
+            empty.textContent = "Dynamic Quote Generator";
 
             console.log(`Categories before loop: ${categories}`);
             // loop through catergories array
@@ -142,9 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 // create new option
                 const newOption = new Option(category, category);
                 // add new option to the select menu
-                categoryFilter.add(newOption, undefined)
+                categoryFilter.add(newOption, undefined);
             }
-
             localStorage.setItem("categoryFilter", JSON.stringify(categoryFilter));
         }
     }
