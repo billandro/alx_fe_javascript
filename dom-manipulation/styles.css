@@ -1,0 +1,17 @@
+#quoteDisplay {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    text-align: center;
+    margin-right: 1rem;
+    border: 1px solid black;
+    padding: 1rem;
+}
