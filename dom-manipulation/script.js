@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Fetch data (JSONPLACEHOLDER)
-    function fetchData() {
+    function fetchQuotesFromServer() {
         fetch('https://jsonplaceholder.typicode.com/posts/1')
         .then(response => response.json())
         .then(response => {
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Populate select menu with categories on load
     populateCategories();
     // Get data
-    fetchData();
+    fetchQuotesFromServer();
     // Post data
     postData();
     // get data every second
