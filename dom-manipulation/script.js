@@ -253,12 +253,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Fetch data (JSONPLACEHOLDER)
-    function fetchQuotesFromServer() {
-        fetch('https://jsonplaceholder.typicode.com/posts/1')
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-        });
+    async function fetchQuotesFromServer() {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+        try {
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const json = await response.json();
+            console.log(json);
+        } catch(error) {
+            console.error(error)
+        }
     }
 
     // Post data
@@ -323,7 +328,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Populate select menu with categories on load
     populateCategories();
     // Get data
-    fetchQuotesFromServer();
+    fetchQuotesFromServer()
+    .then(data => {
+        return data;
+    })
+    .catch(error => {
+        console.error(error);
+    });
     // Post data
     postData();
     // get data every second
