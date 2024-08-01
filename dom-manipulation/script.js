@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const jsonExport = document.getElementById("json-export");
     const jsonImport = document.getElementById("importFile");
     const categoryFilter = document.getElementById("categoryFilter");
+    const conflictMessage = document.getElementById("conflict-resolution");
 
     // Object constructor
     function Quote(text, category) {
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedCategory;
 
     // Load chosen category/option
-    function retieveActiveOption() {
+    function retrieveActiveOption() {
         // clear display
         quoteDisplay.innerHTML = "";
         // retrieve active option
@@ -252,18 +253,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    localStorage.setItem("postData", JSON.stringify({
+        userId: 1,
+        id: 4,
+        title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        body:"quia et suscipit"
+    }));
+
     // Fetch data (JSONPLACEHOLDER)
     async function fetchQuotesFromServer() {
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
         try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-            const data = await response.json();
-            console.log(data);
+            // Convert response to json
+            const serverData = await response.json();
+            // Retrieve current data from local storage
+            const localData = JSON.parse(localStorage.getItem("postData") || "{}");
+            // Compare server data with local data
+            if (JSON.stringify(serverData) !== JSON.stringify(localData)) {
+                conflictMessage.innerText = "Data conflict detected!";
+                conflictMessage.style.color = "red";
 
+                // Prompt to ask what to do
+                const promptAnswer = prompt("Please choose whether to prioritize local data or server data. Type an L for local data or an S for serve data.", "L");;
+                if (promptAnswer) {
+                    const lowerCasePromt = promptAnswer.toLowerCase();
+                    if (lowerCasePromt === 'l') {
+                        // Update local storage with local data 
+                        localStorage.setItem("postData", JSON.stringify(localData));
+                    } else if (lowerCasePromt === 's') {
+                        // Update local storage with server data
+                        localStorage.setItem("postData", JSON.stringify(serverData));
+                    } else {
+                        console.warn("Invalid input. No changes made to local storage.");
+                    }
+                }
+
+            } else {
+                conflictMessage.innerText = "No conflict detected, local storage remains unchanged";
+                conflictMessage.style.color = "green";
+            }
             // save data to local storage
-            localStorage.setItem('postData', JSON.stringify(data));
+            localStorage.setItem("postData", JSON.stringify(serverData));
         } catch(error) {
             console.error(error)
         }
@@ -309,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     jsonExport.addEventListener("click", () => {
         quotesObject = JSON.parse(localStorage.getItem("quotesObject") || "[]");
         console.log(`Array before export: ${quotesObject}`);
-        JSONToFile(quotesObject, "testJsonFile");
+        JSONToFile(quotesObject, "quotes");
     });
     // When importing json
     jsonImport.addEventListener("change", (event) => {
@@ -333,17 +366,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize quotes
     retrieveQuotes();
     // on load
-    retieveActiveOption();
+    retrieveActiveOption();
     // Populate select menu with categories on load
     populateCategories();
     // Get data
-    fetchQuotesFromServer()
-    .then(data => {
-        return data;
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    fetchQuotesFromServer();
     // Post data
     postData();
     // period fetch
