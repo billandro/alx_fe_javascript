@@ -259,11 +259,20 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-            const json = await response.json();
-            console.log(json);
+            const data = await response.json();
+            console.log(data);
+
+            // save data to local storage
+            localStorage.setItem('postData', JSON.stringify(data));
         } catch(error) {
             console.error(error)
         }
+    }
+
+    // Function to periodically fetch data
+    function startPeriodicFetch(interval) {
+        /*fetchAndStoreData();*/ // Initial fetch
+        setInterval(fetchQuotesFromServer, interval);
     }
 
     // Post data
@@ -337,5 +346,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     // Post data
     postData();
-    // get data every second
+    // period fetch
+    startPeriodicFetch(10000);
 });
