@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
             } else {
-                conflictMessage.innerText = "No conflict detected, local storage remains unchanged";
+                conflictMessage.innerText = "Quotes synced with server!";
                 conflictMessage.style.color = "green";
             }
             // save data to local storage
