@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Function to periodically fetch data
-    function startPeriodicFetch(interval) {
+    function syncQuotes(interval) {
         /*fetchAndStoreData();*/ // Initial fetch
         setInterval(fetchQuotesFromServer, interval);
     }
@@ -347,5 +347,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // Post data
     postData();
     // period fetch
-    startPeriodicFetch(10000);
+    syncQuotes(10000);
 });
