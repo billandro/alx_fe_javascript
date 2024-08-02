@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 conflictMessage.style.color = "green";
             }
             // save data to local storage
-            localStorage.setItem("postData", JSON.stringify(serverData));
+            /*localStorage.setItem("postData", JSON.stringify(serverData));*/
         } catch(error) {
             console.error(error)
         }
